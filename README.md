@@ -2,6 +2,8 @@
 
 ## Set Up
 
+Point your browser to `index.html` and full speed ahead!
+
 ## Testing
 
 The tests are run using [Mocha](https://mochajs.org/), which can be grabbed via

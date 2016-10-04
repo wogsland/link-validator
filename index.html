@@ -20,6 +20,11 @@
   <body>
     <!--
     B) Write a front-end single page app (JavaScript + React*)
+
+    NB: Doing this in an AJAX call to a PHP endpoint where a cURL request gets
+    the HTML and then parses it for all the links would have been my first
+    choice as a solution but fell outside the bounds of the spec.
+
     The application must include a form with a single input for a valid URL. Submitting
     the form will request the URL, and the application must parse the HTML response,
     generate a list of links contained on the page, and display the list beautifully
@@ -30,16 +35,25 @@
 
     If you end up with extra time, feel free to comment on the following in your code:
     How might the application handle poorly formatted HTML?
+    Poorly formatted HTML could be parsed directly by searching for "href="
+    rather than grabbing the document links.
+
     If you solved challenge A as well, how might it hook into challenge B, and what
     would the UI look like to display successful and failed validation?
+    The Javascript function could just be included on the page and called as
+    part of the successful ajax return to process through the links from loaded url.
+
     -->
-    <h1>Link Validator</h1>
-    <form class="form-inline">
+    <h1 style="text-align:center">Link Validator</h1>
+    <form class="form-inline" style="text-align:center">
       <div class="form-group">
         <input type="url" class="form-control" id="input-url" placeholder="URL">
         <button type="submit" class="btn btn-default" id="validate-url">Validate</button>
       </div>
     </form>
+
+    <div style="text-align:center; margin-top:67px" id="link-list">
+    <div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -49,7 +63,21 @@
     <script>
     $('#validate-url').click(function(e){
       e.preventDefault();
-      console.log($('#input-url'))
+      $.ajax({
+        type: 'GET',
+        url: $('#input-url')[0].value,
+        crossDomain: true,
+        //dataType:"jsonp",
+        //contentType: "text/html; charset=utf-8",
+        //headers: { 'Access-Control-Allow-Origin': '*' },
+        success: function(data){
+          // parse through the HTML, grabbing links & displaying them
+          console.log(data)
+        },
+        error: function(data){
+          $('#link-list').html('There was an error with that URL');
+        }
+      });
     });
     </script>
   </body>

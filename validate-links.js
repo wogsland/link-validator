@@ -1,5 +1,10 @@
 /*
 A) Write a function (JavaScript, Python, or Scala)
+
+NB: Doing this in PHP with a call to filter_var($url, FILTER_VALIDATE_URL)
+and then a cURL request to get the status code would have been my first
+choice as a solution but fell outside the bounds of the spec.
+
 The function must accept a list of URLs and return a subset of those links that
 are either written incorrectly or do not return a success status code, along with
 a way to identify what was wrong with each link.
